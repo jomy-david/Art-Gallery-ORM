@@ -1,0 +1,80 @@
+{% extends 'main/index.html' %}
+
+{% block link %}
+
+<title>{{post.title}}</title>
+
+<!-- Bootstrap core CSS -->
+<link href="static/main/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="static/main/assets/css/stylesNavbar.css">
+<link rel="stylesheet" href="static/main/assets/css/post.css">
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="static/main/assets/css/owl.css">
+    <link rel="stylesheet" href="static/main/assets/css/animate.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="static/main/assets/css/fontawesome.css">
+    <link rel="stylesheet" href="static/main/assets/css/templatemo-snapx-photography.css">
+{% endblock %}
+
+{% block content %}
+
+<div class="post container modal-img" style="border: 1px solid black;">
+    <div class="info">
+        <a href="ArtistPage?id={{post.artist_id}}">
+        <div class="user">
+            <div class="profile-pic"><img src="media/artist/profile_pic/{{artist_data.profile_pic}}" alt=""></div>
+            <p class="username">{{post.artist_name}}</p>
+        </div>
+        </a>
+    </div>
+    <img src="media/artist/uploads/{{post.file_name}}" class="post-image" alt="">
+    <div class="post-content">
+        <div class="reaction-wrapper">            
+            <a href="likePost?id={{post.post_id}}">
+               {% if like %}
+                <i class="icon fa fa-heart" ><sub>Likes</sub></i>
+                {% else %}
+                <i class="icon fa fa-regular fa-heart" ><sub>{{likes}}</sub></i>
+               {% endif %}     
+                </a>
+            <a href=""><i class="icon fa fa-regular fa-comment" ><sub>{{comment_count}}</sub></i></a>
+            <!-- <a href=""><i class="icon fa fa-heart" ></i></a>
+            <a href=""><i class="icon fa fa-heart" ></i></a> -->
+            
+        </div>
+        <div style="text-align: left;">
+        <p class="description"><span class="id">{{post.artist_id}} </span> {{post.title}}</p>
+        </div>
+    </div>
+    <div style="text-align: left;" class="comment-show">
+        <table>
+        {% for j in comments %}
+        {% if j.spam <= 4 %}
+        <tr>
+            <p class="description"><td class="id"><span>{{j.user_id}} </span> </td>
+            <td class="post-time">{{j.comment}}</p></td>
+            <td><div class="dropdown">
+                <button class="dropbtn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                </button>
+                <div class="dropdown-content">
+                <a href="spamComment?post_id={{post.post_id}}&comment_id={{j.id}}">Report Spam</a>
+                </div>
+              </div>
+            </td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+        </table>
+    </div>
+    <form method="get" action="addComment">
+    <div class="comment-wrapper">
+        
+        <input type="text" name="comment" class="comment-box" placeholder="Add a comment" maxlength="60">
+        <button type="submit" value="{{post.post_id}}" name="post" class="comment-btn">Post</button>
+    </div>
+</form>
+</div>
+</div>
+
+{% endblock %}

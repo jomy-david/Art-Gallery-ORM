@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="author" content="templatemo">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% block link %}
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <title>Welcome to Open Gallery</title>
+
+    
+
+    <!-- Bootstrap core CSS -->
+    <link href="static/main/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="static/main/assets/css/fontawesome.css">
+    <link rel="stylesheet" href="static/main/assets/css/templatemo-snapx-photography.css">
+    <link rel="stylesheet" href="static/main/assets/css/owl.css">
+    <link rel="stylesheet" href="static/main/assets/css/animate.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="static/main/assets/css/stylesNavbar.css">
+    
+    {% endblock %}
+  </head>
+
+<body>
+
+
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- ***** Logo Start ***** -->
+                    <a href="./" class="logo">
+                        <img src="static/main/assets/images/logo.png" alt="Open World">
+                    </a>
+                    <!-- ***** Logo End ***** -->
+                    <!-- ***** Menu Start ***** -->
+                    <ul class="nav">
+                        <li><a href="./" class="active">Home</a></li>
+                        <li class="has-sub" style="padding-right: 15px;">
+                          <a href="javascript:void(0)">Categories</a>
+                          <ul class="sub-menu">
+                            {% for i in cat %}
+                              <li><a href="Gallery?id={{i.cat_id}}">{{i.name}}</a></li>
+                              {% endfor %}
+                          </ul>
+                      </li>
+                      {% if user_data.user_type == "user" %}
+                      <li><a href="ArtistList">Artists</a></li>
+                      {% endif %}
+                    </ul> 
+                    {% if user_data.user_type == "artist" %}  
+                    <div class="border-button">
+                      <a href="artistHome" class="sign-in-up"><i class="fa fa-user"></i> Hi, {{user_data.user_id}}</a>
+                    </div>
+                    {% elif user_data.user_type == "user" %}  
+                    <div class="border-button">
+                      <a href="userHome" class="sign-in-up"><i class="fa fa-user"></i> Hi, {{user_data.user_id}}</a>
+                    </div>
+                    {% elif user_data.user_type == "admin" %}
+                    <div class="border-button">
+                      <a href="administrator" class="sign-in-up"><i class="fa fa-user"></i> Hi, {{user_data.user_id}} </a>
+                    </div>
+                    {% else %}
+                    <div class="border-button">
+                      <a id="modal_trigger" href="#modal" class="sign-in-up"><i class="fa fa-user"></i> Hi Guest</a>
+                    </div>
+                    {% endif %}
+                    <a class='menu-trigger'>
+                        <span>Menu</span>
+                    </a>
+                    <!-- ***** Menu End ***** -->
+                </nav>
+            </div>
+        </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
+
+  <div id="modal" class="popupContainer" style="display:none;">
+    <div class="popupHeader">
+        <span class="header_title">Login</span>
+        <span class="modal_close"><i class="fa fa-times"></i></span>
+    </div>
+
+    <section class="popupBody">
+        <!-- Social Login -->
+        <div class="social_login">
+            <div class="action_btns">
+                <div class="one_half"><a href="Login" class="btn">Login</a></div>
+                <div class="one_half last"><a href="register" class="btn">Sign up</a></div>
+            </div>
+        </div>
+    </section>
+  </div>
+
+{% block content %}
+  <!-- ***** Main Banner Area Start ***** -->
+  <div class="main-banner">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-10 offset-lg-1">
+          <div class="header-text">
+            <h2>Explore a world of <em>Art</em></h2>
+            
+            <div class="buttons">
+              <!-- <div class="big-border-button">
+                <a href="Gallery">Explore Our Gallery</a>
+              </div> -->
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ***** Main Banner Area End ***** -->
+
+<!-- Top Liked Art -->
+  <section class="featured-items" id="featured-items">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="owl-features owl-carousel" style="position: relative; z-index: 5;">
+            {% for post in top_like %}
+            <div class="item">
+              <div class="thumb">
+                <a href="viewPost?id={{post.0}}">
+                <img src="media/artist/uploads/{{post.1}}" alt="">
+                
+                <div class="hover-effect">
+                  <div class="content">
+                    <h4>{{post.title}}</h4>
+                    <ul>
+                      <li><span>Artist Name :</span> {{post.artist_name}}</li>
+                      <li><span>Likes:</span> {{post.likes}} <i class="fa fa-heart"></i></li>
+                    </ul>
+                  </div>
+                </div>
+              </a>
+              </div>
+            </div>
+            {% endfor %}
+            <!-- <div class="item">
+              <div class="thumb">
+                <img src="static/main/assets/images/featured-02.jpg" alt="">
+                <div class="hover-effect">
+                  <div class="content">
+                    <h4>Smile In The Nature <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> <span>(4.5)</span></h4>
+                    <ul>
+                      <li><span>Contest Winner:</span> Thomas Eddy</li>
+                      <li><span>Contest Author:</span> Anthony Soft</li>
+                      <li><span>Awards:</span> $1,200 + Canon EOS R7</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+             -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+<!-- End of Top Liked -->
+
+<!-- Catagories -->
+  <section class="popular-categories">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="section-heading">
+            <h6>Our Categories</h6>
+            <h4>Check Out Our <em>Categories</em></h4>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <!-- <div class="main-button">
+            <a href="static/main/categories.html">Discover All Categories</a>
+          </div> -->
+        </div>
+      </div>
+      <section class="cat-items">
+        {% for i in cat %}
+        {% if i.posts %}
+        <article class="row" style="margin-bottom: 70px;padding-left: 40px;font-size: 30px;color: #00bdfe;font-weight: 700;">
+          {{i.name}}
+        </article>
+        <div class="container contain">
+          {% for post in posts %}
+          {% if post.cat_id == i.cat_id %}
+          <div class="popular-item">
+            <div class="thumb col">
+              <a href="viewPost?id={{post.post_id}}">
+              <img src="media/artist/uploads/{{post.file_name}}" alt="">
+              <span class="category">{{post.artist_name}}</span>
+              <span class="likes"><i class="fa fa-heart"></i> {{post.likes}}</span>
+              </a>
+            </div>
+          </div>
+        
+          {% endif %} 
+          {% endfor %}
+    </div>
+    <div class="border-button row">
+      <a href="Gallery?id={{i.cat_id}}">Browse {{i.name}} Pics</a>
+    </div>
+    {% endif %}
+    {% endfor %}
+      </section>
+  </section>
+<!-- End Of Catagories -->
+  <!-- <section class="closed-contests">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="section-heading text-center">
+            <h6>Closed Photography Contests</h6>
+            <h4><em>Previous Contests</em> With Handpicked <em>Winners</em></h4>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="owl-features owl-carousel" style="position: relative; z-index: 5;">
+            <div class="item">
+              <div class="closed-item">
+                <div class="thumb">
+                  <img src="static/main/assets/images/closed-01.jpg" alt="">
+                  <span class="winner"><em>Winner:</em> Anthony Soft</span>
+                  <span class="price"><em>Award :</em> $1,600</span>
+                </div>
+                <div class="down-content">
+                  <div class="row">
+                    <div class="col-7">
+                      <h4>88 Participants <br><span>Number Of Artists</span></h4>
+                    </div>
+                    <div class="col-5">
+                      <h4 class="pics">320 Pictures <br><span>Submited Pics</span></h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="closed-item">
+                <div class="thumb">
+                  <img src="static/main/assets/images/closed-02.jpg" alt="">
+                  <span class="winner"><em>Winner:</em> Anthony Soft</span>
+                  <span class="price"><em>Award :</em> $4,200</span>
+                </div>
+                <div class="down-content">
+                  <div class="row">
+                    <div class="col-7">
+                      <h4>96 Participants <br><span>Number Of Artists</span></h4>
+                    </div>
+                    <div class="col-5">
+                      <h4 class="pics">410 Pictures <br><span>Submited Pics</span></h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="closed-item">
+                <div class="thumb">
+                  <img src="static/main/assets/images/closed-03.jpg" alt="">
+                  <span class="winner"><em>Winner:</em> Anthony Soft</span>
+                  <span class="price"><em>Award :</em> $3,200</span>
+                </div>
+                <div class="down-content">
+                  <div class="row">
+                    <div class="col-7">
+                      <h4>74 Participants <br><span>Number Of Artists</span></h4>
+                    </div>
+                    <div class="col-5">
+                      <h4 class="pics">284 Pictures <br><span>Submited Pics</span></h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="border-button text-center">
+            <a href="static/main/contests.html">Browse Open Contests</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section> -->
+
+<!-- Footer section -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <p>Open Gallery</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  {% endblock %}
+
+  <!-- Scripts -->
+  <!-- Bootstrap core JavaScript -->
+
+  {% block foot %}
+  <script src="static/main/vendor/jquery/jquery.min.js"></script>
+  <script src="static/main/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+  <script src="static/main/assets/js/isotope.min.js"></script>
+  <script src="static/main/assets/js/owl-carousel.js"></script>
+
+  <script src="static/main/assets/js/tabs.js"></script>
+  <script src="static/main/assets/js/popup.js"></script>
+  <script src="static/main/assets/js/custom.js"></script>
+{% endblock %}
+  </body>
+</html>

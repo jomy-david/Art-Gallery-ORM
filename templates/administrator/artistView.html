@@ -1,0 +1,46 @@
+{% extends 'administrator/index.html' %}
+
+{% block content %}
+<table style="width: fit-content;" class="table table-bordered table-dark">
+  
+      <tr>
+        <th>Name</th>
+        <td>{{details.name}}</td>
+      </tr>
+
+
+      <tr>
+        <th>Artist ID</th>
+        <td>{{details.artist_id}}</td>
+      </tr>
+      <tr>
+        <th>Email</th>
+        <td>{{details.email}}</td>
+      </tr>
+      <tr>
+        <th>Contact</th>
+        <td>{{details.contact}}</td>
+      </tr>
+      <tr>
+        <th>Image</th>
+        <td><img style="max-width: 200px;" src="media/artist/profile_pic/{{details.profile_pic}}"></td>
+      </tr>
+      <tr>
+        <th>Gender</th>
+        <td>{{details.gender}}</td>
+      </tr>
+      <tr>
+        <th>Display Name</th>
+        <td>{{details.display_name}}</td>
+      </tr>
+      <tr>
+        <th>Address</th>
+        <td>{{details.address}}</td>
+      </tr>
+      <tr>
+        <th>Status</th>
+        <td>{{details.status}}</td>
+      </tr>
+  
+  </table>
+  {% endblock %}

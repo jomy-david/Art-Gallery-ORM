@@ -1,0 +1,43 @@
+{% extends 'artist/myGallery.html' %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+<table style="width: fit-content;" class="table table-bordered table-dark">
+
+    <tr>
+      <th>Name</th>
+      <td><input type="text" value="{{details.name}}" maxlength="15" name="name"></td>
+    </tr>
+
+
+    <tr>
+      <th>User ID</th>
+      <td><input type="text" value="{{details.artist_id}}" maxlength="15" name="user_id"></td>
+    </tr>
+    <tr>
+      <th>Email</th>
+      <td><input type="text" value="{{details.email}}" maxlength="20" name="email"></td>
+    </tr>
+    <tr>
+      <th>Password</th>
+      <td><input type="password" value="{{details.password}}" maxlength="20" name="password"></td>
+    </tr>
+    <tr>
+      <th>Contact</th>
+      <td><input type="text" value="{{details.contact}}" maxlength="10" name="contact"></td>
+    </tr>
+    <tr>
+      <th rowspan="2">Image</th>
+      <td ><img style="max-width: 200px;" src="media/artist/profile_pic/{{details.profile_pic}}"></td>
+    </tr>
+    <tr><td><input type="file" name="img"></td></tr>
+    <tr>
+      <th>Gender</th>
+      <td>{{details.gender}}</td>
+    </tr>
+    <tr align="center"><td colspan="2"><input type="submit" value="update">{{msg}}</td></tr>
+
+</table>
+</form>
+  {% endblock %}
